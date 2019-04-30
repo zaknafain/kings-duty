@@ -1,5 +1,11 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
     <div><strong>Kings Bounty</strong></div>
+    <div class="toolbar-spacer"></div>
+    <mat-form-field>
+      <input matInput [(ngModel)]="visibleRadius" type="number" min="0" max="6" step="1" placeholder="visible radius">
+    </mat-form-field>
+    <mat-icon (click)="renewMap()">autorenew</mat-icon>
   </mat-toolbar-row>
 </mat-toolbar>
+<app-map class="map"></app-map>

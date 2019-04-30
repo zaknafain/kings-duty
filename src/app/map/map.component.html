@@ -1,0 +1,54 @@
+<mat-card class="floating floating-left floating-top">
+  <mat-card-header>
+    <mat-card-title>Tile Information</mat-card-title>
+  </mat-card-header>
+  <mat-card-content *ngIf="chosenTile">
+    <div><strong>X:</strong> {{ chosenTile.x }}, <strong>Y:</strong> {{ chosenTile.y }}</div>
+    <div><strong>Terrain:</strong> {{ chosenTile.terrain | titlecase }}</div>
+    <div><strong>Region:</strong> {{ chosenTile.region }}</div>
+  </mat-card-content>
+</mat-card>
+
+<main class="hexagon-container" [ngStyle]="calculateGridColumns()">
+  <ng-container *ngFor="let tile of mapService.map$ | async">
+    <app-hexagon
+      (click)="clickTile(tile)"
+      [tile]="tile"
+      [ngClass]="calculateTileClasses(tile)"
+      [hoverFilter]="hoverFilter"
+    ></app-hexagon>
+  </ng-container>
+</main>
+
+<mat-card class="floating floating-right floating-top">
+  <mat-card-header>
+    <mat-card-title>Tile Hover Filter</mat-card-title>
+  </mat-card-header>
+  <mat-card-actions>
+    <mat-radio-group
+      class="hover-filter-group"
+      [(ngModel)]="hoverFilter">
+      <mat-radio-button *ngFor="let filter of filters" [value]="filter">
+        {{ filter | titlecase }}
+      </mat-radio-button>
+    </mat-radio-group>
+  </mat-card-actions>
+</mat-card>
+
+<button mat-fab
+  (click)="raiseHexagonSize()"
+  [disabled]="hexWidth == 100"
+  type="button"
+  style="bottom: 100px"
+  class="floating floating-right floating-bottom"
+>
+  <mat-icon>add</mat-icon>
+</button>
+<button mat-fab
+  (click)="reduceHexagonSize()"
+  [disabled]="hexWidth == 0"
+  type="button"
+  class="floating floating-right floating-bottom"
+>
+  <mat-icon>remove</mat-icon>
+</button>
