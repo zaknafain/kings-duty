@@ -1,0 +1,54 @@
+<main class="hexagon-container" [ngStyle]="calculateGridColumns()">
+  <ng-container *ngFor="let tile of tileService.tiles$ | async">
+    <app-tile
+      (click)="clickTile(tile)"
+      [tile]="tile"
+      [ngClass]="calculateTileClasses(tile)"
+      [hoverFilter]="hoverFilter"
+    ></app-tile>
+  </ng-container>
+</main>
+
+<mat-card class="floating floating-right floating-top">
+  <mat-card-header>
+    <mat-card-title>Tile Information</mat-card-title>
+  </mat-card-header>
+  <mat-card-content *ngIf="chosenTile">
+    <div><strong>X:</strong> {{ chosenTile.x }}, <strong>Y:</strong> {{ chosenTile.y }}</div>
+    <div><strong>Terrain:</strong> {{ chosenTile.terrain | titlecase }}</div>
+    <div><strong>Region:</strong> {{ chosenTile.region }}</div>
+    <div><strong>Owner:</strong> {{ chosenTile.owner }}</div>
+  </mat-card-content>
+</mat-card>
+
+<ng-container *ngFor="let filter of filters; let i=index">
+  <button mat-fab
+    (click)="updateHoverFilter(filter.name)"
+    [color]="filter.name === hoverFilter ? 'accent' : ''"
+    type="button"
+    [ngStyle]="{'bottom.px': 200 + (70 * i)}"
+    class="floating floating-right floating-bottom"
+  >
+    <mat-icon>{{ filter.icon }}</mat-icon>
+  </button>
+</ng-container>
+
+<button mat-fab
+  (click)="raiseHexagonSize()"
+  [disabled]="hexWidth == 100"
+  color=""
+  type="button"
+  style="bottom: 100px"
+  class="floating floating-right floating-bottom"
+>
+  <mat-icon>add</mat-icon>
+</button>
+<button mat-fab
+  (click)="reduceHexagonSize()"
+  [disabled]="hexWidth == 0"
+  color=""
+  type="button"
+  class="floating floating-right floating-bottom"
+>
+  <mat-icon>remove</mat-icon>
+</button>

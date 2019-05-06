@@ -1,0 +1,82 @@
+:host {
+  --hex-width: 100px;
+  --hex-between: calc(var(--hex-width) / 25);
+  --hex-height: calc(var(--hex-width) / 1.73);
+  --hex-margin: calc(var(--hex-width) / 2);
+  --hex-border: calc(var(--hex-margin) / 1.73);
+  --hex-transition: all .2s ease;
+
+  --color-hex-default:  #DDDDDD;
+  --color-hex-inverted: #FFFFFF;
+}
+
+/* Hexagons */
+.hexagon-container {
+  display: grid;
+  grid-auto-rows: calc(var(--hex-width) - var(--hex-width)/6.93);
+  grid-gap: var(--hex-between) var(--hex-between);
+  padding-bottom: var(--hex-border);
+}
+
+.hexagon {
+  align-items: center;
+  background-color: var(--color-hex-default);
+  fill: white;
+  cursor: pointer;
+  height: var(--hex-height);
+  margin: var(--hex-border) 0;
+  position: relative;
+  transition: var(--hex-transition);
+  width: var(--hex-width);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hexagon::after,
+.hexagon::before {
+  border-left: var(--hex-margin) solid transparent;
+  border-right: var(--hex-margin) solid transparent;
+  content: "";
+  left: 0;
+  position: absolute;
+  transition: var(--hex-transition);
+  width: 0;
+}
+.hexagon::after {
+  border-top: var(--hex-border) solid var(--color-hex-default);
+  top: 100%;
+  width: 0;
+}
+.hexagon::before {
+  border-bottom: var(--hex-border) solid var(--color-hex-default);
+  bottom: 100%;
+}
+
+/* HOVER */
+.hexagon:hover,
+.hexagon.focused {
+  background-color: var(--color-hex-inverted);
+}
+.hexagon:hover::after,
+.hexagon:hover::before,
+.hexagon.focused::after,
+.hexagon.focused::before {
+  border-top-color: var(--color-hex-inverted);
+  border-bottom-color: var(--color-hex-inverted);
+}
+
+/* OFFSET */
+.hexagon.offset {
+  margin-left: calc(var(--hex-width) / 2 + var(--hex-between) / 2);
+}
+
+/* CARDS */
+.hover-filter-group {
+  display: flex;
+  flex-direction: column;
+
+  mat-radio-button {
+    margin: 5px 0;
+  }
+}
