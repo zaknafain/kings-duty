@@ -1,5 +1,22 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
     <div><strong>Kings Duty</strong></div>
+    <div class="toolbar-spacer"></div>
+    <mat-form-field>
+      <input matInput [(ngModel)]="visibleRadius" type="number" min="0" max="6" step="1" placeholder="visible radius">
+    </mat-form-field>
+    <mat-icon (click)="renewMap()">autorenew</mat-icon>
   </mat-toolbar-row>
 </mat-toolbar>
+
+<mat-card class="floating floating-left floating-top">
+  <mat-card-header>
+    <mat-card-title>Realm Information</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div><strong>{{ player }}</strong></div>
+    <div>Claimed Tiles: {{ realmSize }}</div>
+  </mat-card-content>
+</mat-card>
+
+<app-map class="map"></app-map>

@@ -3,10 +3,36 @@
   width: 100%;
 }
 
+/* MENU */
 mat-toolbar {
   position: fixed;
   top: 0;
   z-index: 1;
   box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
 
+  mat-icon {
+    cursor: pointer;
+  }
+}
+
+mat-form-field {
+  font-size: 12px;
+}
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+/* MAP */
+.map {
+  display: block;
+  padding-top: 64px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  overflow: scroll;
+  height: calc(100vh - 64px);
 }
