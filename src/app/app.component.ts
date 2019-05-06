@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TileService } from './map/tile/tile.service';
 import { TimeService } from './time/time.service';
+import { DataService } from './data/data.service';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +19,8 @@ export class AppComponent implements OnInit {
 
   constructor(
     private tileService: TileService,
-    private timeService: TimeService
+    private timeService: TimeService,
+    private dataService: DataService
   ) {
     this.tileService.tiles$.subscribe(tiles => {
       this.realmSize = tiles.filter(tile => tile.owner === this.player).length;
