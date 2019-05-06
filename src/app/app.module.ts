@@ -4,10 +4,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AppComponent } from './app.component';
+import { TileComponent } from './map/tile/tile.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TileComponent
   ],
   imports: [
     BrowserModule,

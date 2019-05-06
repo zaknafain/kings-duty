@@ -1,0 +1,78 @@
+/* HOST */
+:host.grassland {
+  background-color: #92c725;
+}
+:host.grassland::before,
+:host.grassland::after {
+  border-top-color: #92c725;
+  border-bottom-color: #92c725;
+}
+:host.plains {
+  background-color: #d1dc63;
+}
+:host.plains::before,
+:host.plains::after {
+  border-top-color: #d1dc63;
+  border-bottom-color: #d1dc63;
+}
+:host.hills {
+  background-color: #c7a849;
+}
+:host.hills::before,
+:host.hills::after {
+  border-top-color: #c7a849;
+  border-bottom-color: #c7a849;
+}
+:host.mountains {
+  background-color: #7f6f61;
+}
+:host.mountains::before,
+:host.mountains::after {
+  border-top-color: #7f6f61;
+  border-bottom-color: #7f6f61;
+}
+:host.swamp {
+  background-color: #8e9a18;
+}
+:host.swamp::before,
+:host.swamp::after {
+  border-top-color: #8e9a18;
+  border-bottom-color: #8e9a18;
+}
+:host.sea {
+  background-color: #3279b1;
+}
+:host.sea::before,
+:host.sea::after {
+  border-top-color: #3279b1;
+  border-bottom-color: #3279b1;
+}
+
+/* CONTENT */
+.hexagon-container {
+  align-items: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+:host svg {
+  height: 75%;
+  transition: var(--hex-transition);
+}
+
+:host:hover svg,
+:host.focused svg {
+  display: none;
+}
+
+:host div {
+  font-size: calc(var(--hex-width) / 6);
+  display: none;
+}
+
+:host:hover div,
+:host.focused div {
+  display: inherit;
+}
