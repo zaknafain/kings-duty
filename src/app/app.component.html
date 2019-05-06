@@ -2,6 +2,24 @@
   <mat-toolbar-row>
     <div><strong>Kings Duty</strong></div>
     <div class="toolbar-spacer"></div>
+    <button
+      mat-icon-button
+      color=""
+      [disabled]="!timeService.timeRunning"
+      (click)="timeService.stopTime()"
+    >
+      <mat-icon>pause</mat-icon>
+    </button>
+    <div><strong>{{ timeService.days$ | async }}</strong></div>
+    <button
+      mat-icon-button
+      color=""
+      [disabled]="timeService.timeRunning"
+      (click)="timeService.startTime()"
+    >
+      <mat-icon>play_arrow</mat-icon>
+    </button>
+    <div class="toolbar-spacer"></div>
     <mat-form-field>
       <input matInput [(ngModel)]="visibleRadius" type="number" min="0" max="6" step="1" placeholder="visible radius">
     </mat-form-field>
