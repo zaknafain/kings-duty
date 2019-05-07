@@ -3,6 +3,10 @@ import { BehaviorSubject } from 'rxjs';
 
 import { TileService } from '../map/tile/tile.service';
 import { TimeService } from '../time/time.service';
+import { SaveGame } from './save-game';
+
+const storageKeyName = 'saveGame';
+const currentVersion = '0.1';
 
 @Injectable({
   providedIn: 'root'
@@ -37,15 +41,38 @@ export class DataService {
   }
 
   save(): void {
-    localStorage.setItem('tiles', JSON.stringify(this.tileService.tiles));
-    localStorage.setItem('days', JSON.stringify(this.timeService.days));
+    localStorage.setItem(storageKeyName, this.createDataJSON(currentVersion));
     this.saved = true;
     this.hasData = true;
   }
 
   load(): void {
-    this.tileService.tiles = JSON.parse(localStorage.getItem('tiles'));
-    this.timeService.days = JSON.parse(localStorage.getItem('days'));
+    this.loadDataJSON(localStorage.getItem(storageKeyName));
     this.saved = true;
+  }
+
+  private createDataJSON(version: string): string {
+    if (version === currentVersion) { return this.createVersionCurrent(); }
+  }
+
+  private loadDataJSON(json: string): void {
+    const data: SaveGame = JSON.parse(json);
+
+    if (data.version === currentVersion) { this.loadVersionCurrent(data); }
+  }
+
+  private createVersionCurrent(): string {
+    const data = {
+      version: currentVersion,
+      tiles: this.tileService.tiles,
+      days: this.timeService.days
+    };
+
+    return JSON.stringify(data);
+  }
+
+  private loadVersionCurrent(data: SaveGame): void {
+    this.tileService.tiles = data.tiles;
+    this.timeService.days = data.days;
   }
 }
