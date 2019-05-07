@@ -21,7 +21,10 @@ export class DataService {
     private tileService: TileService,
     private timeService: TimeService
   ) {
-    if (localStorage.getItem('tiles')) { this.hasData = true; }
+    if (localStorage.getItem(storageKeyName)) {
+      this.hasData = true;
+      this.load();
+    }
     this.tileService.tiles$.subscribe(() => this.saved = false);
     this.timeService.days$.subscribe(() => this.saved = false);
   }

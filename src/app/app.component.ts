@@ -28,7 +28,9 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.renewMap();
+    if (!this.dataService.hasData) {
+      this.renewMap();
+    }
   }
 
   renewMap(): void {
