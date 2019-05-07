@@ -12,12 +12,14 @@ import { MatSliderModule } from '@angular/material/slider';
 import { AppComponent } from './app.component';
 import { MapComponent } from './map/map.component';
 import { TileComponent } from './map/tile/tile.component';
+import { GameTimePipe } from './time/game-time.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     MapComponent,
-    TileComponent
+    TileComponent,
+    GameTimePipe
   ],
   imports: [
     BrowserModule,
