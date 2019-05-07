@@ -1,0 +1,30 @@
+<h1 mat-dialog-title>Start a New Game</h1>
+<div mat-dialog-content>
+  <p>If you create a new game all not saved progress will be lost.</p>
+
+  <div>
+    <label>Radius of visibility</label>
+    <mat-slider
+      [max]="6"
+      [min]="0"
+      [step]="1"
+      [thumbLabel]="true"
+      [(ngModel)]="data.visibleRadius"
+    >
+    </mat-slider>
+  </div>
+  <div>
+    <mat-form-field color="accent">
+      <input matInput placeholder="Realm Name" [(ngModel)]="data.realmName">
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field color="accent">
+      <input matInput placeholder="Ruler Name" [(ngModel)]="data.rulerName">
+    </mat-form-field>
+  </div>
+</div>
+<div mat-dialog-actions class="button-row">
+  <button mat-flat-button (click)="cancel()">Cancel</button>
+  <button mat-flat-button color="accent" [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</div>

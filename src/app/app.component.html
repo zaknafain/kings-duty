@@ -35,22 +35,6 @@
 
     <div class="toolbar-spacer"></div>
 
-    <div><strong>{{ visibleRadius }}</strong></div>
-    <mat-slider
-      [max]="6"
-      [min]="0"
-      [step]="1"
-      [(ngModel)]="visibleRadius"
-    >
-    </mat-slider>
-    <button
-      type="button"
-      mat-icon-button
-      color=""
-      (click)="renewMap()"
-    >
-      <mat-icon>autorenew</mat-icon>
-    </button>
     <button
       type="button"
       mat-icon-button
@@ -68,6 +52,14 @@
       (click)="dataService.load()"
     >
       <mat-icon>backup</mat-icon>
+    </button>
+    <button
+      type="button"
+      mat-icon-button
+      color=""
+      (click)="newGame()"
+    >
+      <mat-icon>autorenew</mat-icon>
     </button>
   </mat-toolbar-row>
 </mat-toolbar>

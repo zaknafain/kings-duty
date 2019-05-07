@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
+import { SaveGame } from './save-game';
 import { TileService } from '../map/tile/tile.service';
 import { TimeService } from '../time/time.service';
-import { SaveGame } from './save-game';
+import { RealmService } from '../realm/realm.service';
 
 const storageKeyName = 'saveGame';
 const currentVersion = '0.1';
@@ -19,7 +20,8 @@ export class DataService {
 
   constructor(
     private tileService: TileService,
-    private timeService: TimeService
+    private timeService: TimeService,
+    private realmService: RealmService
   ) {
     if (localStorage.getItem(storageKeyName)) {
       this.hasData = true;
@@ -27,6 +29,7 @@ export class DataService {
     }
     this.tileService.tiles$.subscribe(() => this.saved = false);
     this.timeService.days$.subscribe(() => this.saved = false);
+    this.realmService.playerRealm$.subscribe(() => this.saved = false);
   }
 
   get saved(): boolean {
@@ -68,7 +71,8 @@ export class DataService {
     const data = {
       version: currentVersion,
       tiles: this.tileService.tiles,
-      days: this.timeService.days
+      days: this.timeService.days,
+      realm: this.realmService.playerRealm
     };
 
     return JSON.stringify(data);
@@ -77,5 +81,6 @@ export class DataService {
   private loadVersionCurrent(data: SaveGame): void {
     this.tileService.tiles = data.tiles;
     this.timeService.days = data.days;
+    this.realmService.playerRealm = data.realm;
   }
 }

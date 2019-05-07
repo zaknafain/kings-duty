@@ -1,18 +1,28 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+
 import { Realm } from './realm';
+
+const startingRealm: Realm = {
+  name: 'Super duper kingdom',
+  ruler: 'Super duper king',
+  size: 0
+};
 
 @Injectable({
   providedIn: 'root'
 })
 export class RealmService {
-  playerRealm: Realm;
+  private readonly _playerRealm = new BehaviorSubject<Realm>(startingRealm);
+  readonly playerRealm$ = this._playerRealm.asObservable();
 
-  constructor() {
-    this.playerRealm = {
-      name: 'Super duper kingdom',
-      ruler: 'Super duper king',
-      size: 0
-    };
+  constructor() { }
+
+  get playerRealm(): Realm {
+    return this._playerRealm.getValue();
+  }
+  set playerRealm(playerRealm: Realm) {
+    this._playerRealm.next(playerRealm);
   }
 
 }
