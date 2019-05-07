@@ -8,20 +8,29 @@
       type="button"
       mat-icon-button
       color=""
-      [disabled]="!timeService.timeRunning"
+      [disabled]="timeService.timeRunning === 'stop'"
       (click)="timeService.stopTime()"
     >
       <mat-icon>pause</mat-icon>
     </button>
-    <div><strong>{{ timeService.days$ | async | gameTime }}</strong></div>
+    <div class="time-container">{{ timeService.days$ | async | gameTime }}</div>
     <button
       type="button"
       mat-icon-button
       color=""
-      [disabled]="timeService.timeRunning"
-      (click)="timeService.startTime()"
+      [disabled]="timeService.timeRunning === 'normal'"
+      (click)="timeService.startSlowTime()"
     >
       <mat-icon>play_arrow</mat-icon>
+    </button>
+    <button
+      type="button"
+      mat-icon-button
+      color=""
+      [disabled]="timeService.timeRunning === 'fast'"
+      (click)="timeService.startFastTime()"
+    >
+      <mat-icon>fast_forward</mat-icon>
     </button>
 
     <div class="toolbar-spacer"></div>
