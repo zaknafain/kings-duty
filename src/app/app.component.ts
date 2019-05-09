@@ -9,6 +9,9 @@ import { DataService } from './data/data.service';
 import { RealmService } from './realm/realm.service';
 
 import { NewGameDialogComponent } from './new-game-dialog/new-game-dialog.component';
+import { OverlayContainer } from '@angular/cdk/overlay';
+import { ThemeService } from './themes/theme.service';
+import { Theme, defaultTheme } from './themes/theme';
 
 @Component({
   selector: 'app-root',
@@ -21,14 +24,22 @@ import { NewGameDialogComponent } from './new-game-dialog/new-game-dialog.compon
 export class AppComponent {
   visibleRadius = 3;
   realm: Realm;
+  theme: Theme = defaultTheme;
 
   constructor(
+    private matDialog: MatDialog,
+    public overlayContainer: OverlayContainer,
     private tileService: TileService,
     private timeService: TimeService,
     private dataService: DataService,
     private realmService: RealmService,
-    private matDialog: MatDialog
+    private themeService: ThemeService
   ) {
+    this.themeService.theme$.subscribe(theme => {
+      if (this.theme !== theme && theme !== undefined) {
+        this.switchTheme(theme);
+      }
+    });
     this.realmService.playerRealm$.subscribe(realm => {
       this.realm = realm;
     });
@@ -43,7 +54,8 @@ export class AppComponent {
       data: {
         visibleRadius: this.visibleRadius,
         realmName: this.realm.name,
-        rulerName: this.realm.ruler
+        rulerName: this.realm.ruler,
+        colorTheme: this.theme
       }
     });
 
@@ -52,12 +64,19 @@ export class AppComponent {
         this.realmService.playerRealm = {
           name: result.realmName,
           ruler: result.rulerName,
-          size: 0
+          size: 0,
         };
+        this.themeService.theme = result.colorTheme;
         this.visibleRadius = result.visibleRadius;
         this.renewMap();
       }
     });
+  }
+
+  private switchTheme(theme: Theme): void {
+    this.overlayContainer.getContainerElement().parentElement.classList.remove(this.theme.mainClass);
+    this.overlayContainer.getContainerElement().parentElement.classList.add(theme.mainClass);
+    this.theme = theme;
   }
 
   private renewMap(): void {

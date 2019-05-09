@@ -2,6 +2,33 @@ mat-form-field {
   width: 100%;
 }
 
+mat-slider {
+  margin: 0 8px;
+}
+
+.themes-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-items: center;
+  justify-content: stretch;
+
+  div {
+    min-width: 60px;
+    max-width: 60px;
+    min-height: 60px;
+    max-height: 60px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1 1 auto;
+    margin: 4px;
+  }
+}
+
 .button-row {
   justify-content: space-around;
 }

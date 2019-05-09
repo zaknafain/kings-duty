@@ -23,6 +23,17 @@
       <input matInput placeholder="Ruler Name" [(ngModel)]="data.rulerName">
     </mat-form-field>
   </div>
+  <div>
+    <label>Color Theme</label>
+    <div class="themes-container">
+      <div *ngFor="let theme of colorThemes" [ngClass]="theme.backgroundClass">
+        <button mat-mini-fab type="button" color="accent" (click)="checkTheme(theme)" [ngClass]="theme.componentClass">
+          <mat-icon *ngIf="data.colorTheme === theme">radio_button_checked</mat-icon>
+          <mat-icon *ngIf="data.colorTheme !== theme">radio_button_unchecked</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
 <div mat-dialog-actions class="button-row">
   <button mat-flat-button (click)="cancel()">Cancel</button>
