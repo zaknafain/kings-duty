@@ -1,17 +1,18 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
+import { Tile } from './map/tiles/tile';
 import { Realm } from './realms/realm';
 import { NewGameForm } from './new-game-dialog/new-game-form';
+import { Theme, defaultTheme } from './themes/theme';
 import { TileService } from './map/tiles/tile.service';
 import { TimeService } from './time/time.service';
 import { DataService } from './save-games/data.service';
 import { RealmService } from './realms/realm.service';
+import { ThemeService } from './themes/theme.service';
 
 import { NewGameDialogComponent } from './new-game-dialog/new-game-dialog.component';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { ThemeService } from './themes/theme.service';
-import { Theme, defaultTheme } from './themes/theme';
 
 @Component({
   selector: 'app-root',
@@ -44,7 +45,10 @@ export class AppComponent {
       this.realm = realm;
     });
     this.tileService.tiles$.subscribe(tiles => {
-      this.realm.size = tiles.filter(tile => tile.owner === this.realm.ruler).length;
+      const ownedTiles: Tile[] = tiles.filter(tile => tile.owner === this.realm.ruler);
+
+      this.realm.size = ownedTiles.length;
+      this.realm.people = ownedTiles.map(tile => tile.people).reduce((a, b) => a + b);
     });
     if (!this.dataService.hasData) { this.newGame(); }
   }

@@ -18,7 +18,8 @@ export class MapComponent {
   filters = [
     { name: 'terrain', icon: 'terrain' },
     { name: 'coordinates', icon: 'location_on' },
-    { name: 'region', icon: 'map' }
+    { name: 'region', icon: 'map' },
+    { name: 'people', icon: 'people' }
   ];
   hoverFilter = 'terrain';
   chosenTile: Tile;
