@@ -2,6 +2,7 @@
   <div [ngSwitch]="hoverFilter" class="hexagon-container">
     <div *ngSwitchCase="'coordinates'">{{ tile.x }} | {{ tile.y }}</div>
     <div *ngSwitchCase="'region'">{{ tile.region }}</div>
+    <div *ngSwitchCase="'people'">{{ tile.people | number }}</div>
     <div *ngSwitchDefault>{{ tile.terrain | titlecase }}</div>
   </div>
 </ng-template>

@@ -42,7 +42,14 @@ export class TileService {
 
   generateMap(visibileRadius: number): void {
     this.regions = [{ type: 'grassland', size: 1, name: 'grassland00' }];
-    const initialTile: Tile = { x: 0, y: 0, terrain: 'grassland', isKnown: false, region: 'grassland00' };
+    const initialTile: Tile = {
+      x: 0,
+      y: 0,
+      terrain: 'grassland',
+      isKnown: false,
+      region: 'grassland00',
+      people: this.randomStartingPeople()
+    };
     this.tiles = [initialTile];
     this.revealTile(initialTile);
 
@@ -115,7 +122,7 @@ export class TileService {
   }
 
   private generateTile(x: number, y: number): Tile {
-    const tile: Tile = { x, y , isKnown: false }; // terrain: this.randomTerrain().label
+    const tile: Tile = { x, y , isKnown: false };
     const connectors: Array<Tile> = this.getConnecters(tile);
     const connectedRegions: Region[] = this.regions.filter(r => connectors.some(c => c.region === r.name));
 
@@ -174,5 +181,11 @@ export class TileService {
     });
 
     return returnType || terrainTypes[terrainTypes.length - 1];
+  }
+
+  private randomStartingPeople(): number {
+    const random = Math.random();
+
+    return Math.floor(random * 100000);
   }
 }

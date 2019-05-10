@@ -5,4 +5,5 @@ export class Tile {
   terrain?: string;
   region?: string;
   owner?: string;
+  people?: number;
 }
