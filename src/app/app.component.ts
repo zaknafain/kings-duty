@@ -48,7 +48,7 @@ export class AppComponent {
       const ownedTiles: Tile[] = tiles.filter(tile => tile.owner === this.realm.ruler);
 
       this.realm.size = ownedTiles.length;
-      this.realm.people = ownedTiles.map(tile => tile.people).reduce((a, b) => a + b);
+      this.realm.people = ownedTiles.map(tile => tile.people).reduce((a, b) => a + b, 0);
     });
     if (!this.dataService.hasData) { this.newGame(); }
   }
