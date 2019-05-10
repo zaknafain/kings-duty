@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { Realm } from './realm/realm';
+import { Realm } from './realms/realm';
 import { NewGameForm } from './new-game-dialog/new-game-form';
 import { TileService } from './map/tile/tile.service';
 import { TimeService } from './time/time.service';
 import { DataService } from './save-games/data.service';
-import { RealmService } from './realm/realm.service';
+import { RealmService } from './realms/realm.service';
 
 import { NewGameDialogComponent } from './new-game-dialog/new-game-dialog.component';
 import { OverlayContainer } from '@angular/cdk/overlay';

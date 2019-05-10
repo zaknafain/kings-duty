@@ -1,5 +1,5 @@
 import { Tile } from '../map/tile/tile';
-import { Realm } from '../realm/realm';
+import { Realm } from '../realms/realm';
 import { Theme } from '../themes/theme';
 
 export class SaveGame {

@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { SaveGame } from './save-game';
 import { TileService } from '../map/tile/tile.service';
 import { TimeService } from '../time/time.service';
-import { RealmService } from '../realm/realm.service';
+import { RealmService } from '../realms/realm.service';
 import { ThemeService } from '../themes/theme.service';
 
 const storageKeyName = 'saveGame';
