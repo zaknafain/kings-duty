@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 import { SaveGame } from './save-game';
-import { TileService } from '../map/tile/tile.service';
+import { TileService } from '../map/tiles/tile.service';
 import { TimeService } from '../time/time.service';
 import { RealmService } from '../realms/realm.service';
 import { ThemeService } from '../themes/theme.service';

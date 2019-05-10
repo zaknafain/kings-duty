@@ -1,8 +1,8 @@
 
 import { Component, HostBinding } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { TileService } from './tile/tile.service';
-import { Tile } from './tile/tile';
+import { TileService } from './tiles/tile.service';
+import { Tile } from './tiles/tile';
 
 @Component({
   selector: 'app-map',

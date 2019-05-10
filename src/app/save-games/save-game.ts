@@ -1,4 +1,4 @@
-import { Tile } from '../map/tile/tile';
+import { Tile } from '../map/tiles/tile';
 import { Realm } from '../realms/realm';
 import { Theme } from '../themes/theme';
 

@@ -13,7 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 
 import { AppComponent } from './app.component';
 import { MapComponent } from './map/map.component';
-import { TileComponent } from './map/tile/tile.component';
+import { TileComponent } from './map/tiles/tile.component';
 import { GameTimePipe } from './time/game-time.pipe';
 import { NewGameDialogComponent } from './new-game-dialog/new-game-dialog.component';
 
