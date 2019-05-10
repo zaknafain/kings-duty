@@ -5,7 +5,7 @@ import { Realm } from './realm/realm';
 import { NewGameForm } from './new-game-dialog/new-game-form';
 import { TileService } from './map/tile/tile.service';
 import { TimeService } from './time/time.service';
-import { DataService } from './data/data.service';
+import { DataService } from './save-games/data.service';
 import { RealmService } from './realm/realm.service';
 
 import { NewGameDialogComponent } from './new-game-dialog/new-game-dialog.component';
