@@ -6,6 +6,7 @@ import { TileService } from '../map/tiles/tile.service';
 import { TimeService } from '../time/time.service';
 import { RealmService } from '../realms/realm.service';
 import { ThemeService } from '../themes/theme.service';
+import { EventService } from '../events/event.service';
 
 const storageKeyName = 'saveGame';
 const currentVersion = '0.1';
@@ -23,7 +24,8 @@ export class DataService {
     private tileService: TileService,
     private timeService: TimeService,
     private realmService: RealmService,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    private eventService: EventService
   ) {
     if (localStorage.getItem(storageKeyName)) {
       this.hasData = true;
@@ -76,7 +78,8 @@ export class DataService {
       tiles: this.tileService.tiles,
       days: this.timeService.days,
       realm: this.realmService.playerRealm,
-      theme: this.themeService.theme
+      theme: this.themeService.theme,
+      events: this.eventService.events
     };
 
     return JSON.stringify(data);
@@ -87,5 +90,6 @@ export class DataService {
     this.timeService.days = data.days;
     this.realmService.playerRealm = data.realm;
     this.themeService.theme = data.theme;
+    this.eventService.events = data.events;
   }
 }

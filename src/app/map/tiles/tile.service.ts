@@ -63,8 +63,14 @@ export class TileService {
     }
   }
 
-  claimTile(tile: Tile, ruler: string): void {
-    this.tiles.find(t => t.x === tile.x && t.y === tile.y).owner = ruler;
+  claimTile(x: number, y: number, ruler: string): void {
+    this.tiles.find(t => t.x === x && t.y === y).owner = ruler;
+
+    this.tiles = [...this.tiles];
+  }
+
+  addPopulation(x: number, y: number, people: number): void {
+    this.tiles.find(t => t.x === x && t.y === y).people += people;
 
     this.tiles = [...this.tiles];
   }
@@ -186,6 +192,6 @@ export class TileService {
   private randomStartingPeople(): number {
     const random = Math.random();
 
-    return Math.floor(random * 100000);
+    return Math.floor(random * 1000);
   }
 }
