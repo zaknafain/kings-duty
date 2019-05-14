@@ -16,12 +16,13 @@ export class MapComponent {
   rowLength: number;
   hexWidth = 100;
   filters = [
+    { name: 'structures', icon: 'home' },
     { name: 'terrain', icon: 'terrain' },
     { name: 'coordinates', icon: 'location_on' },
     { name: 'region', icon: 'map' },
     { name: 'people', icon: 'people' }
   ];
-  hoverFilter = 'terrain';
+  tileFilter = 'structures';
   chosenTile: Tile;
   @HostBinding('attr.style')
   public get valueAsStyle(): any {
@@ -78,8 +79,8 @@ export class MapComponent {
     }
   }
 
-  updateHoverFilter(filter: string) {
-    this.hoverFilter = filter;
+  updateTileFilter(filter: string) {
+    this.tileFilter = filter;
   }
 
   private tileEquals(a: Tile, b: Tile): boolean {

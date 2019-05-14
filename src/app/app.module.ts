@@ -10,12 +10,14 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { AppComponent } from './app.component';
 import { MapComponent } from './map/map.component';
 import { TileComponent } from './map/tiles/tile.component';
 import { GameTimePipe } from './time/game-time.pipe';
 import { NewGameDialogComponent } from './new-game-dialog/new-game-dialog.component';
+import { EventDialogComponent } from './event-dialog/event-dialog.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { NewGameDialogComponent } from './new-game-dialog/new-game-dialog.compon
     MapComponent,
     TileComponent,
     GameTimePipe,
-    NewGameDialogComponent
+    NewGameDialogComponent,
+    EventDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -35,10 +38,14 @@ import { NewGameDialogComponent } from './new-game-dialog/new-game-dialog.compon
     MatCardModule,
     MatSliderModule,
     MatDialogModule,
-    MatInputModule
+    MatInputModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [NewGameDialogComponent]
+  entryComponents: [
+    NewGameDialogComponent,
+    EventDialogComponent
+  ]
 })
 export class AppModule { }

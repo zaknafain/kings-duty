@@ -1,9 +1,10 @@
 <ng-template [ngIf]="tile.isKnown">
-  <div [ngSwitch]="hoverFilter" class="hexagon-container">
+  <div [ngSwitch]="filter" class="hexagon-container">
     <div *ngSwitchCase="'coordinates'">{{ tile.x }} | {{ tile.y }}</div>
     <div *ngSwitchCase="'region'">{{ tile.region }}</div>
     <div *ngSwitchCase="'people'">{{ tile.people | number }}</div>
-    <div *ngSwitchDefault>{{ tile.terrain | titlecase }}</div>
+    <div *ngSwitchCase="'terrain'">{{ tile.terrain | titlecase }}</div>
+    <div *ngSwitchDefault></div>
   </div>
 </ng-template>
 <ng-template [ngIf]="!tile.isKnown">

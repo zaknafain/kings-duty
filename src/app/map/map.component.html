@@ -4,7 +4,7 @@
       (click)="clickTile(tile)"
       [tile]="tile"
       [ngClass]="calculateTileClasses(tile)"
-      [hoverFilter]="hoverFilter"
+      [filter]="tileFilter"
     ></app-tile>
   </ng-container>
 </main>
@@ -22,17 +22,23 @@
   </mat-card-content>
 </mat-card>
 
-<ng-container *ngFor="let filter of filters; let i=index">
-  <button mat-fab
-    (click)="updateHoverFilter(filter.name)"
-    [color]="filter.name === hoverFilter ? 'accent' : ''"
-    type="button"
-    [ngStyle]="{'bottom.px': 200 + (70 * i)}"
-    class="floating floating-right floating-bottom"
-  >
-    <mat-icon>{{ filter.icon }}</mat-icon>
+<button
+  mat-fab
+  color="white"
+  [matMenuTriggerFor]="tileFilterMenu"
+  class="floating floating-right floating-bottom"
+  [ngStyle]="{'bottom.px': 200}"
+>
+  <mat-icon>more_vert</mat-icon>
+</button>
+<mat-menu #tileFilterMenu="matMenu" xPosition="before" yPosition="above">
+  <button mat-menu-item *ngFor="let filter of filters" (click)="updateTileFilter(filter.name)">
+    <mat-icon [color]="filter.name === tileFilter ? 'accent' : 'white'">
+      {{ filter.icon }}
+    </mat-icon>
+    <span>{{ filter.name | titlecase }}</span>
   </button>
-</ng-container>
+</mat-menu>
 
 <button mat-fab
   (click)="raiseHexagonSize()"

@@ -64,15 +64,14 @@
 
 :host:hover svg,
 :host.focused svg {
-  display: none;
+  fill: black;
 }
 
 :host div {
   font-size: calc(var(--hex-width) / 6);
-  display: none;
 }
 
 :host:hover div,
 :host.focused div {
-  display: inherit;
+  color: black;
 }

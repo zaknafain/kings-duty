@@ -8,7 +8,7 @@ import { Tile } from './tile';
 })
 export class TileComponent implements OnInit {
   @Input() tile: Tile;
-  @Input() hoverFilter: string;
+  @Input() filter: string;
   _chosen = false;
 
   constructor() { }
