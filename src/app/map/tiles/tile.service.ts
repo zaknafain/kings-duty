@@ -75,7 +75,7 @@ export class TileService {
     this.tiles = [...this.tiles];
   }
 
-  private addTile(x: number, y: number): void {
+  addTile(x: number, y: number): void {
     const newTiles: Tile[] = [];
 
     if (this.tiles.findIndex(tile => tile.y === y) < 0) {
@@ -86,7 +86,7 @@ export class TileService {
       for (let i = fromPosition; i <= toPosition; i++) {
         newTiles.push(this.generateTile(i, y));
       }
-    } else {
+    } else if (this.tiles.findIndex(tile => tile.x === x) < 0) {
       const columnZero = this.tiles.filter(tile => tile.x === 0);
       const fromPosition = columnZero[columnZero.length - 1].y;
       const toPosition = columnZero[0].y;
@@ -100,7 +100,7 @@ export class TileService {
     this.tiles = newMap.sort((a: Tile, b: Tile) => this.sortTiles(a, b));
   }
 
-  private getConnecters(tile: Tile): Array<Tile> {
+  getConnecters(tile: Tile): Array<Tile> {
     return this.tiles.filter(t => {
       return t.x === tile.x - 1 && t.y === tile.y // one left
         || t.x === tile.x + 1 && t.y === tile.y // one right
@@ -111,15 +111,14 @@ export class TileService {
     });
   }
 
-  private revealConnecters(tile: Tile): Tile[] {
+  revealConnecters(tile: Tile): Tile[] {
     const connectors = this.getConnecters(tile);
-    if (connectors.length !== 6) { console.log(tile, connectors); }
     connectors.forEach(c => this.revealTile(c));
 
     return connectors;
   }
 
-  private sortTiles(a: Tile, b: Tile): number {
+  sortTiles(a: Tile, b: Tile): number {
     let sort = b.y - a.y;
 
     if (sort === 0) { sort = a.x - b.x; }
@@ -127,7 +126,7 @@ export class TileService {
     return sort;
   }
 
-  private generateTile(x: number, y: number): Tile {
+  generateTile(x: number, y: number): Tile {
     const tile: Tile = { x, y , isKnown: false };
     const connectors: Array<Tile> = this.getConnecters(tile);
     const connectedRegions: Region[] = this.regions.filter(r => connectors.some(c => c.region === r.name));
@@ -159,7 +158,7 @@ export class TileService {
     return tile;
   }
 
-  private randomTerrain(connectedRegions: Region[]): Terrain {
+  randomTerrain(connectedRegions: Region[]): Terrain {
     let totalWeight = 0;
     let returnType: Terrain;
 
@@ -189,9 +188,9 @@ export class TileService {
     return returnType || terrainTypes[terrainTypes.length - 1];
   }
 
-  private randomStartingPeople(): number {
+  randomStartingPeople(): number {
     const random = Math.random();
 
-    return Math.floor(random * 1000);
+    return Math.floor(random * 500) + 500;
   }
 }
