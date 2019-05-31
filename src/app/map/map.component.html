@@ -13,7 +13,7 @@
   <mat-card-header>
     <mat-card-title>Tile Information</mat-card-title>
   </mat-card-header>
-  <mat-card-content *ngIf="chosenTile">
+  <mat-card-content *ngIf="chosenTile && chosenTile.isKnown">
     <div><strong>X:</strong> {{ chosenTile.x }}, <strong>Y:</strong> {{ chosenTile.y }}</div>
     <div><strong>Terrain:</strong> {{ chosenTile.terrain | titlecase }}</div>
     <div><strong>Region:</strong> {{ chosenTile.region }}</div>

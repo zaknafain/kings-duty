@@ -39,9 +39,6 @@ export class MapComponent {
   }
 
   clickTile(tile: Tile): void {
-    if (!tile.isKnown) {
-      this.tileService.revealTile(tile);
-    }
     if (this.chosenTile === tile) {
       this.chosenTile = undefined;
     } else {
@@ -68,7 +65,7 @@ export class MapComponent {
   }
 
   reduceHexagonSize(): void {
-    if (this.hexWidth > 0) {
+    if (this.hexWidth > 4) {
       this.hexWidth = this.hexWidth - 8;
     }
   }
