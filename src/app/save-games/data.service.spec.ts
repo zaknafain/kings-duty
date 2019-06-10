@@ -1,61 +1,21 @@
 import { TestBed, fakeAsync } from '@angular/core/testing';
-import { defer } from 'rxjs';
 
 import { DataService } from './data.service';
 import { TileService } from '../map/tiles/tile.service';
-import { Tile } from '../map/tiles/tile';
 import { TimeService } from '../time/time.service';
-import { Realm } from '../realms/realm';
 import { RealmService } from '../realms/realm.service';
-import { colorThemes } from '../themes/theme';
 import { ThemeService } from '../themes/theme.service';
 import { EventService } from '../events/event.service';
-
-function fakeAsyncResponse<T>(data: T) {
-  return defer(() => Promise.resolve(data));
-}
+import {
+  tileServiceStub,
+  timeServiceStub,
+  realmServiceStub,
+  themeServiceStub,
+  eventServiceStub,
+} from '../shared/testing-resources';
 
 describe('DataService', () => {
   let service: DataService;
-  const tile: Tile = {
-    isKnown: true,
-    x: 0,
-    y: 0,
-    owner: 'owner',
-    people: 1234,
-    region: 'plains-region',
-    terrain: 'plains'
-  };
-  const tileServiceStub = {
-    get tiles$() {
-      return fakeAsyncResponse([tile]);
-    }
-  };
-  const timeServiceStub = {
-    get days$() {
-      return fakeAsyncResponse(12);
-    }
-  };
-  const realm: Realm = {
-    name: 'Name',
-    ruler: 'Ruler',
-    size: 0
-  };
-  const realmServiceStub = {
-    get playerRealm$() {
-      return fakeAsyncResponse([realm]);
-    }
-  };
-  const themeServiceStub = {
-    get theme$() {
-      return fakeAsyncResponse([colorThemes[0]]);
-    }
-  };
-  const eventServiceStub = {
-    get theme$() {
-      return fakeAsyncResponse([]);
-    }
-  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
