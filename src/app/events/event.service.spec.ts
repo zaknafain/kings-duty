@@ -4,24 +4,35 @@ import { of } from 'rxjs';
 import { TimeEvent, NewcommerArrivingEvent, TimeEventAction } from './time-event';
 import { EventService } from './event.service';
 import { TileService } from '../map/tiles/tile.service';
+import { TimeService } from '../time/time.service';
+import {
+  tileServiceSpy,
+  timeServiceStub,
+  addPopulationSpy
+} from '../shared/testing-resources';
 
 describe('EventService', () => {
   let service: EventService;
-  const tileServiceStub = jasmine.createSpyObj('TileService', ['addPopulation']);
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [{ provide: TileService, useValue: tileServiceStub }]
+      providers: [
+        { provide: TileService, useValue: tileServiceSpy },
+        { provide: TimeService, useValue: timeServiceStub }
+      ]
     });
 
-    service = new EventService(TestBed.get(TileService));
+    service = new EventService(
+      TestBed.get(TileService),
+      TestBed.get(TimeService)
+    );
   });
 
   it('should create an instance', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('events', () => {
+  describe('currentEvent', () => {
     const event: TimeEvent = {
       day: 1,
       description: 'desc',
@@ -30,22 +41,22 @@ describe('EventService', () => {
       eventOptions: []
     };
 
-    it('should initially return no events', () => {
-      expect(service.events).toEqual([]);
+    it('should initially return no event', () => {
+      expect(service.currentEvent).toBeUndefined();
     });
 
-    it('setting events should return them', () => {
-      service.events = [event];
+    it('setting an event should return it', () => {
+      service.currentEvent = event;
 
-      expect(service.events).toEqual([event]);
+      expect(service.currentEvent).toEqual(event);
     });
 
-    it('events$ should be an Observable of events', fakeAsync(() => {
-      let events = [];
-      service.events$.subscribe(e => { events = e; });
-      expect(events).toEqual([]);
-      service.events = [event];
-      expect(events).toEqual([event]);
+    it('currentEvent$ should be an Observable of an event', fakeAsync(() => {
+      let localEvent;
+      service.currentEvent$.subscribe(e => { localEvent = e; });
+      expect(localEvent).toBeUndefined();
+      service.currentEvent = event;
+      expect(localEvent).toEqual(event);
     }));
   });
 
@@ -76,7 +87,6 @@ describe('EventService', () => {
       actionsParams: { x: 0, y: 0, people: 100 },
       name: 'name'
     };
-    const addPopulationSpy = tileServiceStub.addPopulation.and.returnValue( of(undefined) );
 
     it('actionType "gainPeople" calls the TileService addPopulation function', () => {
       expect(addPopulationSpy.calls.any()).toBe(false);

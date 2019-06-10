@@ -3,27 +3,36 @@ import { BehaviorSubject } from 'rxjs';
 
 import { TimeEvent, TimeEventAction, NewcommerArrivingEvent } from './time-event';
 import { TileService } from '../map/tiles/tile.service';
+import { TimeService } from '../time/time.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventService {
-  private readonly _events = new BehaviorSubject<TimeEvent[]>([]);
-  readonly events$ = this._events.asObservable();
+  events: TimeEvent[] = [];
+  private readonly _currentEvent = new BehaviorSubject<TimeEvent>(undefined);
+  readonly currentEvent$ = this._currentEvent.asObservable();
 
   constructor(
-    private tileService: TileService
-  ) { }
-
-  get events(): TimeEvent[] {
-    return this._events.getValue();
+    private tileService: TileService,
+    private timeService: TimeService
+  ) {
+    this.timeService.days$.subscribe(day => {
+      if (this.events[0] !== undefined && this.events[0].day === day) {
+        this.currentEvent = this.events.pop();
+      }
+    });
   }
-  set events(events: TimeEvent[]) {
-    this._events.next(events);
+
+  get currentEvent(): TimeEvent {
+    return this._currentEvent.getValue();
+  }
+  set currentEvent(currentEvent: TimeEvent) {
+    this._currentEvent.next(currentEvent);
   }
 
   createInitialEvents(): void {
-    const events = [
+    const initialEvents = [
       new NewcommerArrivingEvent(),
       new NewcommerArrivingEvent(),
       new NewcommerArrivingEvent(),
@@ -31,7 +40,7 @@ export class EventService {
       new NewcommerArrivingEvent()
     ];
 
-    this.events = events.sort((a, b) => a.day - b.day);
+    this.events = initialEvents.sort((a, b) => a.day - b.day);
   }
 
   triggerEventAction(eventAction: TimeEventAction): void {
