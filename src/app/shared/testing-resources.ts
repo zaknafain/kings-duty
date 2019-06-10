@@ -50,8 +50,8 @@ export const themeServiceStub = {
 };
 
 export const eventServiceStub = {
-  get events$() {
-    return fakeAsyncResponse([]);
+  get currentEvent$() {
+    return fakeAsyncResponse(undefined);
   }
 };
 
