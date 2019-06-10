@@ -54,15 +54,10 @@ export class AppComponent {
       this.realm.size = ownedTiles.length;
       this.realm.people = ownedTiles.map(tile => tile.people).reduce((a, b) => a + b, 0);
     });
-    this.timeService.days$.subscribe(day => {
-      const events = this.eventService.events.filter(e => e.day === day);
-
-      if (events.length > 0) {
+    this.eventService.currentEvent$.subscribe(event => {
+      if (event !== undefined) {
         this.timeService.stopTime();
-
-        events.forEach(event => {
           this.showEventDialog(event);
-        });
       }
     });
     if (!this.dataService.hasData) { this.showNewGameDialog(); }
