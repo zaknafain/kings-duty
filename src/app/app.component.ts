@@ -12,6 +12,7 @@ import { DataService } from './save-games/data.service';
 import { RealmService } from './realms/realm.service';
 import { ThemeService } from './themes/theme.service';
 import { EventService } from './events/event.service';
+import { PopulationService } from './map/tiles/population.service';
 
 import { NewGameDialogComponent } from './new-game-dialog/new-game-dialog.component';
 import { EventDialogComponent } from './event-dialog/event-dialog.component';
@@ -38,7 +39,8 @@ export class AppComponent {
     private dataService: DataService,
     private realmService: RealmService,
     private themeService: ThemeService,
-    private eventService: EventService
+    private eventService: EventService,
+    private populationService: PopulationService
   ) {
     this.themeService.theme$.subscribe(theme => {
       if (this.theme !== theme) {
@@ -57,7 +59,7 @@ export class AppComponent {
     this.eventService.currentEvent$.subscribe(event => {
       if (event !== undefined) {
         this.timeService.stopTime();
-          this.showEventDialog(event);
+        this.showEventDialog(event);
       }
     });
     if (!this.dataService.hasData) { this.showNewGameDialog(); }
@@ -107,5 +109,6 @@ export class AppComponent {
     this.tileService.claimTile(0, 0, this.realm.ruler);
     this.timeService.resetTime();
     this.eventService.createInitialEvents();
+    this.populationService.startPopulationGrowth();
   }
 }

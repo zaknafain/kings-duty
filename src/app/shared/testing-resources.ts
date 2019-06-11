@@ -29,6 +29,8 @@ export const timeServiceStub = {
     return fakeAsyncResponse(12);
   }
 };
+export const timeServiceSpy = jasmine.createSpyObj('TimeService', ['dayOfYear']);
+export const dayYearSpy = timeServiceSpy.dayOfYear.and.returnValue( of(42) );
 
 const realm: Realm = {
   name: 'Name',
