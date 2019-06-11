@@ -35,6 +35,7 @@ export class DataService {
     this.timeService.days$.subscribe(() => this.saved = false);
     this.realmService.playerRealm$.subscribe(() => this.saved = false);
     this.themeService.theme$.subscribe(() => this.saved = false);
+    this.eventService.currentEvent$.subscribe(() => this.saved = false);
   }
 
   get saved(): boolean {
@@ -79,7 +80,8 @@ export class DataService {
       days: this.timeService.days,
       realm: this.realmService.playerRealm,
       theme: this.themeService.theme,
-      events: this.eventService.events
+      events: this.eventService.events,
+      currentEvent: this.eventService.currentEvent
     };
 
     return JSON.stringify(data);
@@ -91,5 +93,6 @@ export class DataService {
     this.realmService.playerRealm = data.realm;
     this.themeService.theme = data.theme;
     this.eventService.events = data.events;
+    this.eventService.currentEvent = data.currentEvent;
   }
 }

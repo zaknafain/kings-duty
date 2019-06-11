@@ -10,4 +10,5 @@ export class SaveGame {
   realm: Realm;
   theme: Theme;
   events: TimeEvent[];
+  currentEvent: TimeEvent;
 }
