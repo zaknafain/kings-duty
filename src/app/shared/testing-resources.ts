@@ -27,10 +27,11 @@ export const addPopulationSpy = tileServiceSpy.addPopulation;
 export const timeServiceStub = {
   get days$() {
     return fakeAsyncResponse(12);
+  },
+  get days() {
+    return 12;
   }
 };
-export const timeServiceSpy = jasmine.createSpyObj('TimeService', ['dayOfYear']);
-export const dayYearSpy = timeServiceSpy.dayOfYear.and.returnValue( of(42) );
 
 const realm: Realm = {
   name: 'Name',

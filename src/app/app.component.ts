@@ -87,7 +87,7 @@ export class AppComponent {
     });
 
     dialogRef.afterClosed().subscribe((result: TimeEventAction) => {
-      this.eventService.triggerEventAction(result);
+      this.eventService.resolveEvent(result);
     });
   }
 

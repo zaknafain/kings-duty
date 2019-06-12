@@ -17,11 +17,7 @@ export class EventService {
     private tileService: TileService,
     private timeService: TimeService
   ) {
-    this.timeService.days$.subscribe(day => {
-      if (this.events[0] !== undefined && this.events[0].day === day) {
-        this.currentEvent = this.events.pop();
-      }
-    });
+    this.timeService.days$.subscribe(day => this.setCurrentEventForDay(day));
   }
 
   get currentEvent(): TimeEvent {
@@ -43,7 +39,7 @@ export class EventService {
     this.events = initialEvents.sort((a, b) => a.day - b.day);
   }
 
-  triggerEventAction(eventAction: TimeEventAction): void {
+  resolveEvent(eventAction: TimeEventAction): void {
     if (eventAction && eventAction.actionType === 'gainPeople') {
       this.tileService.addPopulation(
         eventAction.actionsParams.x,
@@ -52,6 +48,16 @@ export class EventService {
       );
     } else if (eventAction && eventAction.actionType === 'console') {
       console.log(eventAction);
+    }
+
+    this.setCurrentEventForDay(this.timeService.days);
+  }
+
+  private setCurrentEventForDay(day: number): void {
+    if (this.events[0] !== undefined && this.events[0].day === day) {
+      this.currentEvent = this.events.pop();
+    } else {
+      this.currentEvent = undefined;
     }
   }
 }

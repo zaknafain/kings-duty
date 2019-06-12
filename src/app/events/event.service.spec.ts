@@ -5,14 +5,17 @@ import { TimeEvent, NewcommerArrivingEvent, TimeEventAction } from './time-event
 import { EventService } from './event.service';
 import { TileService } from '../map/tiles/tile.service';
 import { TimeService } from '../time/time.service';
-import {
-  tileServiceSpy,
-  timeServiceStub,
-  addPopulationSpy
-} from '../shared/testing-resources';
+import { tileServiceSpy, timeServiceStub, addPopulationSpy } from '../shared/testing-resources';
 
 describe('EventService', () => {
   let service: EventService;
+  const timeEvent: TimeEvent = {
+    day: 12,
+    description: 'desc',
+    title: 'title',
+    eventActions: [],
+    eventOptions: []
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -33,30 +36,22 @@ describe('EventService', () => {
   });
 
   describe('currentEvent', () => {
-    const event: TimeEvent = {
-      day: 1,
-      description: 'desc',
-      title: 'title',
-      eventActions: [],
-      eventOptions: []
-    };
-
     it('should initially return no event', () => {
       expect(service.currentEvent).toBeUndefined();
     });
 
     it('setting an event should return it', () => {
-      service.currentEvent = event;
+      service.currentEvent = timeEvent;
 
-      expect(service.currentEvent).toEqual(event);
+      expect(service.currentEvent).toEqual(timeEvent);
     });
 
     it('currentEvent$ should be an Observable of an event', fakeAsync(() => {
       let localEvent;
       service.currentEvent$.subscribe(e => { localEvent = e; });
       expect(localEvent).toBeUndefined();
-      service.currentEvent = event;
-      expect(localEvent).toEqual(event);
+      service.currentEvent = timeEvent;
+      expect(localEvent).toEqual(timeEvent);
     }));
   });
 
@@ -81,17 +76,36 @@ describe('EventService', () => {
     });
   });
 
-  describe('triggerEventAction', () => {
+  describe('resolveEvent', () => {
     const gainPeopleAction: TimeEventAction = {
       actionType: 'gainPeople',
       actionsParams: { x: 0, y: 0, people: 100 },
       name: 'name'
     };
 
+    it('removes the currentEvent', () => {
+      service.currentEvent = timeEvent;
+
+      service.resolveEvent(gainPeopleAction);
+
+      expect(service.currentEvent).toBeUndefined();
+    });
+
+    it('should assign the next event for the day', () => {
+      service.events = [{ ...timeEvent, title: 'title2' }];
+      service.currentEvent = timeEvent;
+
+      service.resolveEvent(gainPeopleAction);
+
+      expect(service.currentEvent.title).toBe('title2');
+    });
+
     it('actionType "gainPeople" calls the TileService addPopulation function', () => {
-      expect(addPopulationSpy.calls.any()).toBe(false);
-      service.triggerEventAction(gainPeopleAction);
-      expect(addPopulationSpy.calls.any()).toBe(true);
+      const callCount = addPopulationSpy.calls.count();
+
+      service.resolveEvent(gainPeopleAction);
+
+      expect(addPopulationSpy.calls.count()).toBe(callCount + 1);
     });
   });
 });
