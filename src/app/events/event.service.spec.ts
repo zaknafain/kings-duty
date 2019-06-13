@@ -92,7 +92,10 @@ describe('EventService', () => {
     });
 
     it('should assign the next event for the day', () => {
-      service.events = [{ ...timeEvent, title: 'title2' }];
+      service.events = [
+        { ...timeEvent, title: 'title2' },
+        { ...timeEvent, title: 'title3', day: 13 }
+      ];
       service.currentEvent = timeEvent;
 
       service.resolveEvent(gainPeopleAction);

@@ -54,8 +54,9 @@ export class EventService {
   }
 
   private setCurrentEventForDay(day: number): void {
+    console.log(this.events);
     if (this.events[0] !== undefined && this.events[0].day === day) {
-      this.currentEvent = this.events.pop();
+      this.currentEvent = this.events.shift();
     } else {
       this.currentEvent = undefined;
     }
