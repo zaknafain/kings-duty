@@ -26,7 +26,7 @@ export class NewcommerArrivingEvent implements TimeEvent {
   description = '';
 
   constructor() {
-    const people = Math.random() * 100;
+    const people = (Math.random() * 90) + 10;
 
     this.day = Math.floor(Math.random() * 100);
     this.eventOptions.people = people;
