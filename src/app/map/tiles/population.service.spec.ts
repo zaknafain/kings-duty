@@ -4,10 +4,7 @@ import { Tile } from './tile';
 import { PopulationService } from './population.service';
 import { TileService } from './tile.service';
 import { TimeService } from 'src/app/time/time.service';
-import {
-  tileServiceStub,
-  timeServiceSpy,
-} from '../../shared/testing-resources';
+import { tileServiceStub, timeServiceStub } from '../../shared/testing-resources';
 
 describe('PopulationService', () => {
   let service;
@@ -16,7 +13,7 @@ describe('PopulationService', () => {
     TestBed.configureTestingModule({
       providers: [
         { provide: TileService, useValue: tileServiceStub },
-        { provide: TimeService, useValue: timeServiceSpy },
+        { provide: TimeService, useValue: timeServiceStub },
     ]});
 
     service = TestBed.get(PopulationService);
