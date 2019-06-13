@@ -78,7 +78,7 @@ describe('EventService', () => {
 
   describe('resolveEvent', () => {
     const gainPeopleAction: TimeEventAction = {
-      actionType: 'gainPeople',
+      actionType: 'GAIN_PEOPLE',
       actionsParams: { x: 0, y: 0, people: 100 },
       name: 'name'
     };

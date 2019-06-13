@@ -19,13 +19,8 @@ export class NewcommerArrivingEvent implements TimeEvent {
   eventActions = [
     {
       name: 'Welcome them',
-      actionType: 'gainPeople',
+      actionType: 'GAIN_PEOPLE',
       actionsParams: { people: 0, x: 0, y: 0 }
-    },
-    {
-      name: 'Deny them',
-      actionType: 'console',
-      actionsParams: { }
     }
   ];
   description = '';
@@ -35,8 +30,9 @@ export class NewcommerArrivingEvent implements TimeEvent {
 
     this.day = Math.floor(Math.random() * 100);
     this.eventOptions.people = people;
-    this.eventActions.forEach(a => a.actionsParams.people = people);
+    this.eventActions.find(a => a.actionType === 'GAIN_PEOPLE').actionsParams.people = people;
     this.description = `There are some newcommers arriving at your village.
+      They have survived the wilderness for so long and swear to you if let them in.
       There are ${Math.floor(people)} people waiting for you to let them in.`;
   }
 

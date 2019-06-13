@@ -40,13 +40,13 @@ export class EventService {
   }
 
   resolveEvent(eventAction: TimeEventAction): void {
-    if (eventAction && eventAction.actionType === 'gainPeople') {
+    if (eventAction && eventAction.actionType === 'GAIN_PEOPLE') {
       this.tileService.addPopulation(
         eventAction.actionsParams.x,
         eventAction.actionsParams.y,
         eventAction.actionsParams.people
       );
-    } else if (eventAction && eventAction.actionType === 'console') {
+    } else if (eventAction && eventAction.actionType === 'CONSOLE') {
       console.log(eventAction);
     }
 

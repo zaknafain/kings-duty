@@ -38,10 +38,10 @@ describe('NewcommerArrivingEvent', () => {
   });
 
   it('should have 2 TimeEventActions', () => {
-    expect(event.eventActions.length).toBe(2);
+    expect(event.eventActions.length).toBe(1);
   });
 
   it('should include a TimeEventActions with type "gainPeople"', () => {
-    expect(event.eventActions.filter(a => a.actionType === 'gainPeople').length).toBe(1);
+    expect(event.eventActions.filter(a => a.actionType === 'GAIN_PEOPLE').length).toBe(1);
   });
 });
