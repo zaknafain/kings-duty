@@ -189,8 +189,6 @@ export class TileService {
   }
 
   randomStartingPeople(): number {
-    const random = Math.random();
-
-    return Math.floor(random * 500) + 500;
+    return (Math.random() * 500) + 500;
   }
 }

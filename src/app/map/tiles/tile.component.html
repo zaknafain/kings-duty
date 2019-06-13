@@ -2,7 +2,7 @@
   <div [ngSwitch]="filter" class="hexagon-container">
     <div *ngSwitchCase="'coordinates'">{{ tile.x }} | {{ tile.y }}</div>
     <div *ngSwitchCase="'region'">{{ tile.region }}</div>
-    <div *ngSwitchCase="'people'">{{ tile.people | number }}</div>
+    <div *ngSwitchCase="'people'">{{ tile.people | number:'1.0-0' }}</div>
     <div *ngSwitchCase="'terrain'">{{ tile.terrain | titlecase }}</div>
     <div *ngSwitchDefault></div>
   </div>
