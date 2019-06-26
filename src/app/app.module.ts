@@ -6,19 +6,27 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
-import { MatRadioModule } from '@angular/material/radio';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { AppComponent } from './app.component';
 import { MapComponent } from './map/map.component';
-import { HexagonComponent } from './map/hexagon/hexagon.component';
+import { TileComponent } from './map/tiles/tile.component';
+import { GameTimePipe } from './time/game-time.pipe';
+import { NewGameDialogComponent } from './new-game-dialog/new-game-dialog.component';
+import { EventDialogComponent } from './event-dialog/event-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MapComponent,
-    HexagonComponent
+    TileComponent,
+    GameTimePipe,
+    NewGameDialogComponent,
+    EventDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -27,11 +35,17 @@ import { HexagonComponent } from './map/hexagon/hexagon.component';
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
-    MatInputModule,
     MatCardModule,
-    MatRadioModule
+    MatSliderModule,
+    MatDialogModule,
+    MatInputModule,
+    MatMenuModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    NewGameDialogComponent,
+    EventDialogComponent
+  ]
 })
 export class AppModule { }

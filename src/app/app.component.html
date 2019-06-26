@@ -1,11 +1,78 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <div><strong>Kings Bounty</strong></div>
+    <div><strong>Kings Duty</strong></div>
+
     <div class="toolbar-spacer"></div>
-    <mat-form-field>
-      <input matInput [(ngModel)]="visibleRadius" type="number" min="0" max="6" step="1" placeholder="visible radius">
-    </mat-form-field>
-    <mat-icon (click)="renewMap()">autorenew</mat-icon>
+
+    <button
+      type="button"
+      mat-icon-button
+      color=""
+      [disabled]="timeService.timeRunning === 'stop'"
+      (click)="timeService.stopTime()"
+    >
+      <mat-icon>pause</mat-icon>
+    </button>
+    <div class="time-container">{{ timeService.days$ | async | gameTime }}</div>
+    <button
+      type="button"
+      mat-icon-button
+      color=""
+      [disabled]="timeService.timeRunning === 'normal'"
+      (click)="timeService.startSlowTime()"
+    >
+      <mat-icon>play_arrow</mat-icon>
+    </button>
+    <button
+      type="button"
+      mat-icon-button
+      color=""
+      [disabled]="timeService.timeRunning === 'fast'"
+      (click)="timeService.startFastTime()"
+    >
+      <mat-icon>fast_forward</mat-icon>
+    </button>
+
+    <div class="toolbar-spacer"></div>
+
+    <button
+      type="button"
+      mat-icon-button
+      color=""
+      [disabled]="dataService.saved"
+      (click)="dataService.save()"
+    >
+      <mat-icon>save</mat-icon>
+    </button>
+    <button
+      type="button"
+      mat-icon-button
+      color=""
+      [disabled]="!dataService.hasData"
+      (click)="dataService.load()"
+    >
+      <mat-icon>backup</mat-icon>
+    </button>
+    <button
+      type="button"
+      mat-icon-button
+      color=""
+      (click)="showNewGameDialog()"
+    >
+      <mat-icon>autorenew</mat-icon>
+    </button>
   </mat-toolbar-row>
 </mat-toolbar>
+
+<mat-card class="floating floating-left floating-top">
+  <mat-card-header>
+    <mat-card-title>{{ realm.name }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div><strong>{{ realm.ruler }}</strong></div>
+    <div>Claimed Tiles: {{ realm.size }}</div>
+    <div>Total People: {{ realm.people | number:'1.0-0' }}</div>
+  </mat-card-content>
+</mat-card>
+
 <app-map class="map"></app-map>

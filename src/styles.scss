@@ -1,4 +1,84 @@
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~@angular/material/theming';
+@include mat-core();
+
+// The default theme: Light Indigo Pink.
+$light-indigo-pink-primary: mat-palette($mat-indigo);
+$light-indigo-pink-accent:  mat-palette($mat-pink, A200, A100, A400);
+$light-indigo-pink-theme:   mat-light-theme($light-indigo-pink-primary, $light-indigo-pink-accent);
+
+@include angular-material-theme($light-indigo-pink-theme);
+
+.light-indigo-pink {
+  @include angular-material-theme($light-indigo-pink-theme);
+}
+.light-indigo-pink-colors {
+  background-color: map-get($mat-indigo, 500) !important;
+  color: map-get($mat-pink, A200) !important;
+}
+
+// Alternate theme: Dark Teal Amber.
+$dark-cyan-amber-primary: mat-palette($mat-cyan, 400, 200, 700);
+$dark-cyan-amber-accent:  mat-palette($mat-amber, 500, 100, A700);
+$dark-cyan-amber-warn:    mat-palette($mat-deep-orange);
+$dark-cyan-amber-theme:   mat-dark-theme($dark-cyan-amber-primary, $dark-cyan-amber-accent, $dark-cyan-amber-warn);
+
+.dark-cyan-amber {
+  @include angular-material-theme($dark-cyan-amber-theme);
+}
+.dark-cyan-amber-colors {
+  background-color: map-get($mat-cyan, 400) !important;
+  color: map-get($mat-amber, 500) !important;
+}
+
+// Alternate theme: Light Teal Orange.
+$light-teal-orange-primary: mat-palette($mat-teal, 400, A200, 700);
+$light-teal-orange-accent:  mat-palette($mat-orange, 400, A100, 800);
+$light-teal-orange-warn:    mat-palette($mat-deep-orange);
+$light-teal-orange-theme:   mat-light-theme($light-teal-orange-primary, $light-teal-orange-accent, $light-teal-orange-warn);
+
+.light-teal-orange {
+  @include angular-material-theme($light-teal-orange-theme);
+}
+.light-teal-orange-colors {
+  background-color: map-get($mat-teal, 400) !important;
+  color: map-get($mat-orange, 400) !important;
+}
+
+// Alternate theme: Light Purple Blue.
+$light-purple-blue-primary: mat-palette($mat-purple, 700, 400, 900);
+$light-purple-blue-accent:  mat-palette($mat-blue, 500, 300, 900);
+$light-purple-blue-warn:    mat-palette($mat-deep-orange);
+$light-purple-blue-theme:   mat-light-theme($light-purple-blue-primary, $light-purple-blue-accent, $light-purple-blue-warn);
+
+.light-purple-blue {
+  @include angular-material-theme($light-purple-blue-theme);
+}
+.light-purple-blue-colors {
+  background-color: map-get($mat-purple, 700) !important;
+  color: map-get($mat-blue, 500) !important;
+}
+
+
+// Alternate theme: Dark Deep Orange Yellow.
+$dark-deep-orange-yellow-primary: mat-palette($mat-deep-orange, 500, 300, A700);
+$dark-deep-orange-yellow-accent:  mat-palette($mat-yellow, 500, 200, 800);
+$dark-deep-orange-yellow-warn:    mat-palette($mat-red);
+$dark-deep-orange-yellow-theme:   mat-dark-theme($dark-deep-orange-yellow-primary, $dark-deep-orange-yellow-accent, $dark-deep-orange-yellow-warn);
+
+.dark-deep-orange-yellow {
+  @include angular-material-theme($dark-deep-orange-yellow-theme);
+}
+.dark-deep-orange-yellow-colors {
+  background-color: map-get($mat-deep-orange, 500) !important;
+  color: map-get($mat-yellow, 500) !important;
+}
+
+.light-theme-background {
+  background-color: map-get($mat-light-theme-background, background);
+}
+.dark-theme-background {
+  background-color: map-get($mat-dark-theme-background, background);
+}
 
 body, html {
   height: 100%;

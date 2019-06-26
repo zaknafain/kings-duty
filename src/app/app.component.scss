@@ -3,6 +3,7 @@
   width: 100%;
 }
 
+/* MENU */
 mat-toolbar {
   position: fixed;
   top: 0;
@@ -22,6 +23,13 @@ mat-form-field {
   flex: 1 1 auto;
 }
 
+.time-container {
+  width: 300px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* MAP */
 .map {
   display: block;
   padding-top: 64px;

@@ -71,28 +71,6 @@
   margin-left: calc(var(--hex-width) / 2 + var(--hex-between) / 2);
 }
 
-/* FLOATING STUFF */
-.floating {
-  position: absolute;
-  z-index: 1;
-}
-
-.floating-left {
-  left: 30px;
-}
-
-.floating-right {
-  right: 30px;
-}
-
-.floating-bottom {
-  bottom: 30px;
-}
-
-.floating-top {
-  top: 94px;
-}
-
 /* CARDS */
 .hover-filter-group {
   display: flex;

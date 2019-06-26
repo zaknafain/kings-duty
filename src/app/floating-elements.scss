@@ -1,0 +1,21 @@
+/* FLOATING CARDS */
+.floating {
+  position: absolute;
+  z-index: 1;
+}
+
+.floating-left {
+  left: 30px;
+}
+
+.floating-right {
+  right: 30px;
+}
+
+.floating-bottom {
+  bottom: 30px;
+}
+
+.floating-top {
+  top: 94px;
+}

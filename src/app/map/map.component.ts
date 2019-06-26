@@ -1,19 +1,28 @@
 
-import { Component, OnInit, HostBinding } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { MapService } from './map.service';
-import { Tile } from './tile';
+import { TileService } from './tiles/tile.service';
+import { Tile } from './tiles/tile';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
-  styleUrls: ['./map.component.scss']
+  styleUrls: [
+    './map.component.scss',
+    '../floating-elements.scss'
+  ]
 })
-export class MapComponent implements OnInit {
+export class MapComponent {
   rowLength: number;
   hexWidth = 100;
-  filters = ['terrain', 'coordinates', 'region'];
-  hoverFilter = 'terrain';
+  filters = [
+    { name: 'structures', icon: 'home' },
+    { name: 'terrain', icon: 'terrain' },
+    { name: 'coordinates', icon: 'location_on' },
+    { name: 'region', icon: 'map' },
+    { name: 'people', icon: 'people' }
+  ];
+  tileFilter = 'structures';
   chosenTile: Tile;
   @HostBinding('attr.style')
   public get valueAsStyle(): any {
@@ -22,19 +31,14 @@ export class MapComponent implements OnInit {
 
   constructor(
     private sanitizer: DomSanitizer,
-    private mapService: MapService
+    private tileService: TileService
   ) {
-    this.mapService.map$.subscribe(map => {
-      this.rowLength = map.filter(tile => tile.y === 0).length;
+    this.tileService.tiles$.subscribe(tiles => {
+      this.rowLength = tiles.filter(tile => tile.y === 0).length;
     });
   }
 
-  ngOnInit() { }
-
   clickTile(tile: Tile): void {
-    if (!tile.isKnown) {
-      this.mapService.revealTile(tile);
-    }
     if (this.chosenTile === tile) {
       this.chosenTile = undefined;
     } else {
@@ -61,7 +65,7 @@ export class MapComponent implements OnInit {
   }
 
   reduceHexagonSize(): void {
-    if (this.hexWidth > 0) {
+    if (this.hexWidth > 4) {
       this.hexWidth = this.hexWidth - 8;
     }
   }
@@ -70,6 +74,10 @@ export class MapComponent implements OnInit {
     if (this.hexWidth < 100) {
       this.hexWidth = this.hexWidth + 8;
     }
+  }
+
+  updateTileFilter(filter: string) {
+    this.tileFilter = filter;
   }
 
   private tileEquals(a: Tile, b: Tile): boolean {

@@ -1,43 +1,49 @@
-<mat-card class="floating floating-left floating-top">
-  <mat-card-header>
-    <mat-card-title>Tile Information</mat-card-title>
-  </mat-card-header>
-  <mat-card-content *ngIf="chosenTile">
-    <div><strong>X:</strong> {{ chosenTile.x }}, <strong>Y:</strong> {{ chosenTile.y }}</div>
-    <div><strong>Terrain:</strong> {{ chosenTile.terrain | titlecase }}</div>
-    <div><strong>Region:</strong> {{ chosenTile.region }}</div>
-  </mat-card-content>
-</mat-card>
-
 <main class="hexagon-container" [ngStyle]="calculateGridColumns()">
-  <ng-container *ngFor="let tile of mapService.map$ | async">
-    <app-hexagon
+  <ng-container *ngFor="let tile of tileService.tiles$ | async">
+    <app-tile
       (click)="clickTile(tile)"
       [tile]="tile"
       [ngClass]="calculateTileClasses(tile)"
-      [hoverFilter]="hoverFilter"
-    ></app-hexagon>
+      [filter]="tileFilter"
+    ></app-tile>
   </ng-container>
 </main>
 
 <mat-card class="floating floating-right floating-top">
   <mat-card-header>
-    <mat-card-title>Tile Hover Filter</mat-card-title>
+    <mat-card-title>Tile Information</mat-card-title>
   </mat-card-header>
-  <mat-card-actions>
-    <mat-radio-group
-      class="hover-filter-group"
-      [(ngModel)]="hoverFilter">
-      <mat-radio-button *ngFor="let filter of filters" [value]="filter">
-        {{ filter | titlecase }}
-      </mat-radio-button>
-    </mat-radio-group>
-  </mat-card-actions>
+  <mat-card-content *ngIf="chosenTile && chosenTile.isKnown">
+    <div><strong>X:</strong> {{ chosenTile.x }}, <strong>Y:</strong> {{ chosenTile.y }}</div>
+    <div><strong>Terrain:</strong> {{ chosenTile.terrain | titlecase }}</div>
+    <div><strong>Region:</strong> {{ chosenTile.region }}</div>
+    <div><strong>Owner:</strong> {{ chosenTile.owner }}</div>
+    <div><strong>People:</strong> {{ chosenTile.people | number:'1.0-0' }}</div>
+  </mat-card-content>
 </mat-card>
+
+<button
+  mat-fab
+  color="white"
+  [matMenuTriggerFor]="tileFilterMenu"
+  class="floating floating-right floating-bottom"
+  [ngStyle]="{'bottom.px': 200}"
+>
+  <mat-icon>more_vert</mat-icon>
+</button>
+<mat-menu #tileFilterMenu="matMenu" xPosition="before" yPosition="above">
+  <button mat-menu-item *ngFor="let filter of filters" (click)="updateTileFilter(filter.name)">
+    <mat-icon [color]="filter.name === tileFilter ? 'accent' : 'white'">
+      {{ filter.icon }}
+    </mat-icon>
+    <span>{{ filter.name | titlecase }}</span>
+  </button>
+</mat-menu>
 
 <button mat-fab
   (click)="raiseHexagonSize()"
   [disabled]="hexWidth == 100"
+  color=""
   type="button"
   style="bottom: 100px"
   class="floating floating-right floating-bottom"
@@ -47,6 +53,7 @@
 <button mat-fab
   (click)="reduceHexagonSize()"
   [disabled]="hexWidth == 0"
+  color=""
   type="button"
   class="floating floating-right floating-bottom"
 >
