@@ -6,7 +6,7 @@ import { Realm } from '../realms/realm';
 
 export function fakeAsyncResponse<T>(data: T) { return of(data); }
 
-const tile: Tile = {
+export const tile: Tile = {
   isKnown: true,
   x: 0,
   y: 0,

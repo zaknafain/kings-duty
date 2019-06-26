@@ -2,6 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HexagonComponent } from './hexagon.component';
 
+import { tile } from '../../shared/testing-resources';
+
 describe('HexagonComponent', () => {
   let component: HexagonComponent;
   let fixture: ComponentFixture<HexagonComponent>;
@@ -16,6 +18,7 @@ describe('HexagonComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(HexagonComponent);
     component = fixture.componentInstance;
+    component.tile = tile;
     fixture.detectChanges();
   });
 
