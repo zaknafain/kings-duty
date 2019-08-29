@@ -33,11 +33,11 @@ export class AppComponent {
   theme: Theme = defaultTheme;
 
   constructor(
-    private matDialog: MatDialog,
+    public timeService: TimeService,
     public overlayContainer: OverlayContainer,
+    public dataService: DataService,
+    private matDialog: MatDialog,
     private tileService: TileService,
-    private timeService: TimeService,
-    private dataService: DataService,
     private realmService: RealmService,
     private themeService: ThemeService,
     private eventService: EventService,
@@ -66,7 +66,7 @@ export class AppComponent {
     if (!this.dataService.hasData) { this.showNewGameDialog(); }
   }
 
-  private showNewGameDialog(): void {
+  showNewGameDialog(): void {
     const dialogRef = this.matDialog.open(NewGameDialogComponent, {
       data: {
         visibleRadius: this.visibleRadius,

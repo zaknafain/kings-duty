@@ -31,7 +31,7 @@ export class MapComponent {
 
   constructor(
     private sanitizer: DomSanitizer,
-    private tileService: TileService
+    public tileService: TileService
   ) {
     this.tileService.tiles$.subscribe(tiles => {
       this.rowLength = tiles.filter(tile => tile.y === 0).length;
