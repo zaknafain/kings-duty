@@ -20,8 +20,7 @@ describe('EventDialogComponent', () => {
         { name: 'Action 2', actionType: 'action', actionsParams: {} },
         { name: 'Action 3', actionType: 'action', actionsParams: {} },
         { name: 'Action 4', actionType: 'action', actionsParams: {} }
-      ],
-      eventOptions: {}
+      ]
     };
 
     TestBed.configureTestingModule({

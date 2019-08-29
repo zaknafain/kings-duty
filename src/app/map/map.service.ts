@@ -95,7 +95,6 @@ export class MapService {
 
   private revealConnecters(tile: Tile): Tile[] {
     const connectors = this.getConnecters(tile);
-    if (connectors.length !== 6) { console.log(tile, connectors); }
     connectors.forEach(c => this.revealTile(c));
 
     return connectors;

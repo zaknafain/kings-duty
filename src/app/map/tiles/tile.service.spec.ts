@@ -178,6 +178,39 @@ describe('TileService', () => {
     });
   });
 
+  describe('removePopulation', () => {
+    beforeEach(() => {
+      service.tiles = [{ ...tile }];
+    });
+
+    it('should remove the given amout of people from the tile', () => {
+      service.tiles.forEach(t => { expect(t.people).toBe(tile.people); });
+
+      service.removePopulation(tile.x, tile.y, 5);
+
+      service.tiles.forEach(t => { expect(t.people).toBe(1229); });
+    });
+
+    it('should not remove more people than there are', () => {
+      service.tiles.forEach(t => { expect(t.people).toBe(tile.people); });
+
+      service.removePopulation(tile.x, tile.y, 2468);
+
+      service.tiles.forEach(t => { expect(t.people).toBe(0); });
+    });
+
+    it('should call the next handler of the tiles observable', () => {
+      let tiles = [];
+      service.tiles$.subscribe(t => tiles = t);
+
+      tiles.forEach(t => { expect(t.people).toBe(1234); });
+
+      service.removePopulation(tile.x, tile.y, 5);
+
+      tiles.forEach(t => { expect(t.people).toBe(1229); });
+    });
+  });
+
   describe('addTile', () => {
     beforeEach(() => {
       service.generateMap(0);

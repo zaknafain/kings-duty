@@ -4,4 +4,5 @@
 </div>
 <div mat-dialog-actions>
   <button mat-flat-button [mat-dialog-close]="option" *ngFor="let option of data.eventActions">{{ option.name }}</button>
+  <button mat-flat-button [mat-dialog-close]="" *ngIf="data.eventActions.length === 0">Ok</button>
 </div>

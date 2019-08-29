@@ -70,7 +70,19 @@ export class TileService {
   }
 
   addPopulation(x: number, y: number, people: number): void {
-    this.tiles.find(t => t.x === x && t.y === y).people += people;
+    const currentPeople = this.tiles.find(t => t.x === x && t.y === y).people || 0;
+    const newPeople = currentPeople + people;
+
+    this.tiles.find(t => t.x === x && t.y === y).people = newPeople;
+
+    this.tiles = [...this.tiles];
+  }
+
+  removePopulation(x: number, y: number, people: number): void {
+    const currentPeople = this.tiles.find(t => t.x === x && t.y === y).people || 0;
+    const newPeople = (currentPeople - people >= 0) ? currentPeople - people : 0;
+
+    this.tiles.find(t => t.x === x && t.y === y).people = newPeople;
 
     this.tiles = [...this.tiles];
   }

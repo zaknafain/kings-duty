@@ -5,7 +5,8 @@ import { Tile } from './map/tiles/tile';
 import { Realm } from './realms/realm';
 import { NewGameForm } from './new-game-dialog/new-game-form';
 import { Theme, defaultTheme } from './themes/theme';
-import { TimeEvent, TimeEventAction } from './events/time-event';
+import { TimeEvent } from './events/time-event';
+import { TimeEventAction } from './events/time-event-action';
 import { TileService } from './map/tiles/tile.service';
 import { TimeService } from './time/time.service';
 import { DataService } from './save-games/data.service';
@@ -109,6 +110,5 @@ export class AppComponent {
     this.tileService.claimTile(0, 0, this.realm.ruler);
     this.timeService.resetTime();
     this.eventService.createInitialEvents();
-    this.populationService.startPopulationGrowth();
   }
 }

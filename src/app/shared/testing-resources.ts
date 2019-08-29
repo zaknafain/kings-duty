@@ -15,14 +15,20 @@ export const tile: Tile = {
   region: 'plains-region',
   terrain: 'plains'
 };
+export const anotherTile: Tile = {
+  isKnown: true,
+  x: 1,
+  y: 0,
+};
 
 export const tileServiceStub = {
-  get tiles$() {
-    return fakeAsyncResponse([tile]);
-  },
+  get tiles$() { return fakeAsyncResponse([tile, anotherTile]); },
+  get tiles() { return [tile, anotherTile]; },
+  addPopulation() { },
+  removePopulation() { },
+  getConnecters(_t: Tile): Tile[] { return [anotherTile]; },
+  claimTile(_x: number, _y: number, _o: string) { },
 };
-export const tileServiceSpy = jasmine.createSpyObj('TileService', ['addPopulation']);
-export const addPopulationSpy = tileServiceSpy.addPopulation;
 
 export const timeServiceStub = {
   get days$() {

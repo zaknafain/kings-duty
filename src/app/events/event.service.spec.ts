@@ -1,11 +1,11 @@
 import { TestBed, fakeAsync } from '@angular/core/testing';
-import { of } from 'rxjs';
 
-import { TimeEvent, NewcommerArrivingEvent, TimeEventAction } from './time-event';
+import { TimeEvent, NewcommerArrivingEvent, PeopleMovedEvent } from './time-event';
+import { TimeEventAction } from './time-event-action';
 import { EventService } from './event.service';
 import { TileService } from '../map/tiles/tile.service';
 import { TimeService } from '../time/time.service';
-import { tileServiceSpy, timeServiceStub, addPopulationSpy } from '../shared/testing-resources';
+import { timeServiceStub, tileServiceStub } from '../shared/testing-resources';
 
 describe('EventService', () => {
   let service: EventService;
@@ -14,13 +14,12 @@ describe('EventService', () => {
     description: 'desc',
     title: 'title',
     eventActions: [],
-    eventOptions: []
   };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        { provide: TileService, useValue: tileServiceSpy },
+        { provide: TileService, useValue: tileServiceStub },
         { provide: TimeService, useValue: timeServiceStub }
       ]
     });
@@ -76,8 +75,58 @@ describe('EventService', () => {
     });
   });
 
+  describe('addEvent', () => {
+    const newcommerArrivingEvent: NewcommerArrivingEvent = new NewcommerArrivingEvent();
+
+    it('should add the given event to events', () => {
+      expect(service.events.length).toEqual(0);
+      service.addEvent(newcommerArrivingEvent);
+      expect(service.events.length).toEqual(1);
+      expect(service.events[0].day).toBe(newcommerArrivingEvent.day);
+    });
+
+    it('should sort the events by day ascending', () => {
+      const earlyEvent: NewcommerArrivingEvent = new NewcommerArrivingEvent();
+      earlyEvent.day = newcommerArrivingEvent.day - 1;
+      const laterEvent: NewcommerArrivingEvent = new NewcommerArrivingEvent();
+      laterEvent.day = newcommerArrivingEvent.day + 1;
+
+      expect(service.events.length).toEqual(0);
+      service.addEvent(newcommerArrivingEvent);
+      service.addEvent(earlyEvent);
+      service.addEvent(laterEvent);
+      expect(service.events.length).toEqual(3);
+      expect(service.events[0].day).toBeLessThan(service.events[1].day);
+      expect(service.events[1].day).toBeLessThan(service.events[2].day);
+    });
+  });
+
+  describe('sortEvents', () => {
+    const earlyEvent: NewcommerArrivingEvent = new NewcommerArrivingEvent();
+    const laterEvent: NewcommerArrivingEvent = new NewcommerArrivingEvent();
+
+    beforeEach(() => {
+      earlyEvent.day = 1;
+      laterEvent.day = 2;
+    });
+
+    it('should sort the events by day ascending with early event first', () => {
+      const sortedEvents = service.sortEvents([ earlyEvent, laterEvent ]);
+
+      expect(sortedEvents[0].day).toBe(1);
+      expect(sortedEvents[1].day).toBe(2);
+    });
+
+    it('should sort the events by day ascending with early event last', () => {
+      const sortedEvents = service.sortEvents([ laterEvent, earlyEvent ]);
+
+      expect(sortedEvents[0].day).toBe(1);
+      expect(sortedEvents[1].day).toBe(2);
+    });
+  });
+
   describe('resolveEvent', () => {
-    const gainPeopleAction: TimeEventAction = {
+    const action: TimeEventAction = {
       actionType: 'GAIN_PEOPLE',
       actionsParams: { x: 0, y: 0, people: 100 },
       name: 'name'
@@ -86,7 +135,7 @@ describe('EventService', () => {
     it('removes the currentEvent', () => {
       service.currentEvent = timeEvent;
 
-      service.resolveEvent(gainPeopleAction);
+      service.resolveEvent(action);
 
       expect(service.currentEvent).toBeUndefined();
     });
@@ -98,17 +147,55 @@ describe('EventService', () => {
       ];
       service.currentEvent = timeEvent;
 
-      service.resolveEvent(gainPeopleAction);
+      service.resolveEvent(action);
 
       expect(service.currentEvent.title).toBe('title2');
     });
 
-    it('actionType "gainPeople" calls the TileService addPopulation function', () => {
+    it('actionType "GAIN_PEOPLE" calls the TileService addPopulation function', () => {
+      const addPopulationSpy = spyOn(TestBed.get(TileService), 'addPopulation');
       const callCount = addPopulationSpy.calls.count();
 
-      service.resolveEvent(gainPeopleAction);
+      service.resolveEvent(action);
 
       expect(addPopulationSpy.calls.count()).toBe(callCount + 1);
+    });
+
+    it('actionType "MOVE_PEOPLE" calls the TileService addPopulation and removePolulation', () => {
+      const addPopulationSpy = spyOn(TestBed.get(TileService), 'addPopulation');
+      const claimTileSpy = spyOn(TestBed.get(TileService), 'claimTile');
+      const removePopulationSpy = spyOn(TestBed.get(TileService), 'removePopulation');
+      const addCount = addPopulationSpy.calls.count();
+      const claimCount = claimTileSpy.calls.count();
+      const removeCount = removePopulationSpy.calls.count();
+
+      action.actionType = 'MOVE_PEOPLE';
+
+      service.resolveEvent(action);
+
+      expect(addPopulationSpy.calls.count()).toBe(addCount + 1);
+      expect(claimTileSpy.calls.count()).toBe(claimCount + 1);
+      expect(removePopulationSpy.calls.count()).toBe(removeCount + 1);
+    });
+
+    it('actionType "LOOSE_PEOPLE" calls the TileService removePolulation', () => {
+      const removePopulationSpy = spyOn(TestBed.get(TileService), 'removePopulation');
+      const callCount = removePopulationSpy.calls.count();
+
+      action.actionType = 'LOOSE_PEOPLE';
+
+      service.resolveEvent(action);
+
+      expect(removePopulationSpy.calls.count()).toBe(callCount + 1);
+    });
+
+    it('creates a new event when the event actions says so', () => {
+      action.createEvent = 'PEOPLE_MOVED';
+      const movedEvent = new PeopleMovedEvent(12, action.actionsParams.people);
+
+      service.resolveEvent(action);
+
+      expect(service.currentEvent.title).toBe(movedEvent.title);
     });
   });
 });
