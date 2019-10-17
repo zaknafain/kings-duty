@@ -13,8 +13,9 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 10.16
-    - name: npm install, build, and test
+    - name: npm install
       run: |
         npm install --no-optional
         npm install -g @angular/cli
-        ng test --watch false --browsers ChromeHeadless
+    - name: ng test
+      run: ng test --watch false --browsers ChromeHeadless
