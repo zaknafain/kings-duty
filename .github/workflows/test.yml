@@ -16,4 +16,5 @@ jobs:
     - name: npm install, build, and test
       run: |
         npm install --no-optional
+        npm install @angular/cli
         ng test --watch false --browsers ChromeHeadless
