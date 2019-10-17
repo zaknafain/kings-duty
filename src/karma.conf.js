@@ -33,10 +33,7 @@ module.exports = function (config) {
         flags: [
           '--headless',
           '--disable-gpu',
-          '--no-sandbox',
-          '--disable-web-security',
-          '--disable-translate',
-          '--disable-extensions'
+          '--no-sandbox'
         ]
       },
     },
