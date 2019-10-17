@@ -1,0 +1,21 @@
+name: Kings Duty Tests
+
+on: [push]
+
+jobs:
+  build-and-test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js 10.16
+      uses: actions/setup-node@v1
+      with:
+        node-version: 10.16
+    - name: npm install
+      run: |
+        npm install --no-optional
+        npm install -g @angular/cli
+    - name: ng test
+      run: ng test --watch false --browsers ChromeHeadless
